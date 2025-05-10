@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Risk Prediction</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4CAF50;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        select, input[type="number"], input[type="radio"], input[type="checkbox"], button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #f9f9f9;
+        }
+
+        select, input[type="number"] {
+            width: 100%;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .gender-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .gender-group input[type="radio"] {
+            width: auto;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: auto;
+        }
+
+        .form-container select, .form-container input[type="number"], .form-container button {
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Styles for error messages */
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+    </style>
+    <script>
+        // Define Crime Descriptions based on Crime Domains
+        const crimeDescriptions = {
+            "Other Crime": ["BURGLARY", "VANDALISM", "FRAUD", "KIDNAPPING", "PUBLIC INTOXICATION", "HOMICIDE", "CYBERCRIME", "ILLEGAL POSSESSION", "DRUG OFFENSE", "EXTORTION", "COUNTERFEITING", "SHOPLIFTING"],
+            "Fire Accident": ["FIREARM OFFENSE", "ARSON"],
+            "Traffic Fatality": ["TRAFFIC VIOLATION"],
+            "Violent Crime": ["DOMESTIC VIOLENCE", "ROBBERY", "IDENTITY THEFT", "SEXUAL ASSAULT", "ASSAULT", "VEHICLE - STOLEN"]
+        };
+
+        function updateCrimeDescriptions() {
+            let crimeDomain = document.getElementById("crime_domain").value;
+            let crimeDescDropdown = document.getElementById("crime_description");
+            crimeDescDropdown.innerHTML = ""; // Clear previous options
+            
+            // Add new options based on selection
+            crimeDescriptions[crimeDomain].forEach(desc => {
+                let option = document.createElement("option");
+                option.value = desc;
+                option.textContent = desc;
+                crimeDescDropdown.appendChild(option);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h2>Crime Risk Prediction</h2>
+    <div class="form-container">
+        <form action="/predict" method="post">
+            <label for="city">Select City:</label>
+            <select id="city" name="city" required>
+                <option value="">Select City</option>
+                <option value="0">Agra</option>
+                <option value="1">Ahmedabad</option>
+                <option value="2">Bangalore</option>
+                <option value="3">Bhopal</option>
+                <option value="4">Chennai</option>
+                <option value="5">Delhi</option>
+                <option value="6">Faridabad</option>
+                <option value="7">Ghaziabad</option>
+                <option value="8">Hyderabad</option>
+                <option value="9">Indore</option>
+                <option value="10">Jaipur</option>
+                <option value="11">Kalyan</option>
+                <option value="12">Kanpur</option>
+                <option value="13">Kolkata</option>
+                <option value="14">Lucknow</option>
+                <option value="15">Ludhiana</option>
+                <option value="16">Meerut</option>
+                <option value="17">Mumbai</option>
+                <option value="18">Nagpur</option>
+                <option value="19">Nashik</option>
+                <option value="20">Patna</option>
+                <option value="21">Pune</option>
+                <option value="22">Rajkot</option>
+                <option value="23">Srinagar</option>
+                <option value="24">Surat</option>
+                <option value="25">Thane</option>
+                <option value="26">Varanasi</option>
+                <option value="27">Vasai</option>
+                <option value="28">Visakhapatnam</option>
+            </select><br><br>
+
+            <label for="crime_domain">Crime Domain:</label>
+            <select id="crime_domain" name="crime_domain" onchange="updateCrimeDescriptions()" required>
+                <option value="">Select Crime Domain</option>
+                <option value="Other Crime">Other Crime</option>
+                <option value="Fire Accident">Fire Accident</option>
+                <option value="Traffic Fatality">Traffic Fatality</option>
+                <option value="Violent Crime">Violent Crime</option>
+            </select><br><br>
+
+            <label for="crime_description">Crime Description:</label>
+            <select id="crime_description" name="crime_description" required>
+                <option value="">Select Crime Description</option>
+            </select><br><br>
+
+            <label for="police_deployed">Police Deployed:</label>
+            <input type="number" id="police_deployed" name="police_deployed" required><br><br>
+
+            <label for="days_to_close_cases">Days to Close Cases:</label>
+            <input type="number" id="days_to_close_cases" name="days_to_close_cases" required><br><br>
+
+            <label for="days_taken_to_report">Days Taken to Report Crime:</label>
+            <input type="number" id="days_taken_to_report" name="days_taken_to_report" required><br><br>
+
+            <label>Victim Gender:</label><br>
+            <div class="gender-group">
+                <label for="female">
+                    <input type="radio" id="female" name="victim_gender" value="F" required> Female
+                </label>
+                <label for="male">
+                    <input type="radio" id="male" name="victim_gender" value="M" required> Male
+                </label>
+                <label for="other">
+                    <input type="radio" id="other" name="victim_gender" value="X" required> Other
+                </label>
+            </div><br><br>
+            
+            <label>Case Closed:</label>
+            <div class="checkbox-container">
+                <input type="checkbox" id="case_closed_no" name="case_closed_no">
+                <label for="case_closed_no">Mark if Case Closed</label>
+            </div><br><br>
+
+            <button type="submit">Predict Risk</button>
+        </form>
+    </div>
+</body>
+</html>

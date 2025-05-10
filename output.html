@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4CAF50;
+        }
+
+        .result-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .result-container p {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .images-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .images-container img {
+            width: 45%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .results-images-container {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .results-images-container img {
+            width: 45%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .results-images-container h2 {
+            color: #4CAF50;
+        }
+
+        .probability-container {
+            margin-bottom: 30px;
+            background-color: #e9f7ef;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            background-color: #4CAF50;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        .back-link:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Prediction Result</h1>
+
+    <!-- Result Section -->
+    <div class="result-container">
+        <p><strong>City:</strong> {{ city }}</p>
+        <p><strong>Risk Level:</strong> {{ risk_level }}</p>
+    </div>
+
+
+    <!-- Probability Section -->
+    <div class="probability-container">
+        <h3 style="font-size: 24px;">Prediction Probability:</h3>
+        <p> </p>
+        <div style="display: flex; justify-content: space-between; font-size: 20px;">
+            
+            <p style="color: green;">Low Risk: {{ probability_low }}</p>
+            <p style="color: red;">Medium Risk: {{ probability_medium }}</p>
+        </div>
+    </div>
+
+    <!-- Image Section for Prediction Results -->
+    <div class="images-container">
+        <img src="{{ url_for('static', filename='chartpie_age.png') }}" alt="Age Group Distribution">
+        <img src="{{ url_for('static', filename='age_groups.png') }}" alt="Age Group Breakdown">
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-images-container">
+        <h2>Prediction Results</h2>
+        <img src="{{ url_for('static', filename='WS_APP_ACC.png') }}" alt="Accuracy Chart">
+        <img src="{{ url_for('static', filename='WS_APP_Loss.png') }}" alt="Loss Chart">
+    </div>
+
+    <!-- Link Back to Application -->
+    <a href="/index" class="back-link">Go to Application</a>
+
+</body>
+</html>

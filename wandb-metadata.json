@@ -1,0 +1,37 @@
+{
+  "os": "Linux-6.1.85+-x86_64-with-glibc2.35",
+  "python": "CPython 3.11.11",
+  "startedAt": "2025-01-30T11:58:20.879962Z",
+  "program": "Copy%20of%20Exploring%20and%20Predicting%20Crime%20Data%20in%20India",
+  "email": "peyov45564@kuandika.com",
+  "root": "/content",
+  "host": "bd9e6442c04a",
+  "executable": "/usr/bin/python3",
+  "colab": "https://colab.research.google.com/notebook#fileId=1dLXWN-8PlVG7uD4kHXcvNeNzS84ijyQ0",
+  "cpu_count": 1,
+  "cpu_count_logical": 2,
+  "gpu": "Tesla T4",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "120942624768",
+      "used": "30984167424"
+    }
+  },
+  "memory": {
+    "total": "13609422848"
+  },
+  "cpu": {
+    "count": 1,
+    "countLogical": 2
+  },
+  "gpu_nvidia": [
+    {
+      "name": "Tesla T4",
+      "memoryTotal": "16106127360",
+      "cudaCores": 2560,
+      "architecture": "Turing"
+    }
+  ],
+  "cudaVersion": "12.4"
+}
